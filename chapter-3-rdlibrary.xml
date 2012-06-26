@@ -1,0 +1,221 @@
+<chapter>
+  <title>Content Management with RDLibrary</title>
+
+  <section>
+    <title>The Rivendell Library Structure and RDLibrary</title>
+
+    <section>
+      <title>Carts</title>
+      <para>The Rivendell Library consists of a set of objects called carts.  A cart is a data container that  holds either one or more pieces of audio (called an audio cart), or macro commands to the system (called a macro cart).  The cart is the fundamental schedule building block in Rivendell, in that it is the smallest object or 'atom' that the outside world (like a traffic or music scheduler) can see.</para>
+      <para>RDLibrary, upon startup, will show the current list of all carts on the system, as in  Illustration 2 below:</para>
+      <para>A number of important attributes of carts can be seen from this illustration.  First is the cart's number.  Each cart in the Library gets assigned a unique number when it is created.  This number can range between 000001 and 999999, and is the primary 'handle' by which  both Rivendell and external systems (like traffic or music schedulers) refer to the cart.  Very often, sites have specific rules concerning which types of audio (commercials, promos, music, etc) and macros get assigned which numbers.  We'll cover this area in some detail when we discuss groups.</para>
+      <para>Immediately to the left of the cart number is an icon indicating the type of cart.</para>
+      <para>Just to the right of the cart number is the average length of the cart.  Except in the case of where timescaling is in use (in which case it will be indicated in blue numerals), this value is calculated automatically by the system.</para>
+      <para>Next comes various columns showing information from the cart label – Title, Artist, Client and Agency data, etc.  This information can be edited by opening RDLibrary's Edit Cart dialog (Illustration 3), either by double-clicking on the desired cart entry in the list, or by touching the desired cart entry and then touching the Edit button.  In either case, you should get a dialog similar to that shown in Illustration 3.</para>
+      <para>This is how an audio cart looks when loaded into the Edit Cart dialog.  The upper half of the dialog is the cart label data.  The meaning of most of these fields should be fairly self-evident, but a few call for special comment:</para>
+      <para>Enforce Length – When checked, this indicates that timescaling should be applied to this cart when it is played in RDAirPlay, meaning that the cart will air at the length indicated by the Forced Length field, rather than the native length of the audio.  Care is needed when implementing timescaling within a facility, as there are limits to how much the length can be altered, while only certain types of audio adapters support it at all.  See the Rivendell Technical Guide for more information.</para>
+      <para>Group – This is a pull down menu by which the group ownership for the cart can be set.  The system administrator configures the list of available groups for each user in RDAdmin.</para>
+      <para>User Defined – As the name implies, this field has no dedicated meaning to Rivendell itself, but is provided for each site to use as is seen fit.</para>
+      <para>The example in Illustration 3 shows an audio cart.  As such, the bottom half of the dialog displays the lists of cuts contained within the cart.  </para>
+    </section>
+
+    <section>
+      <title>Cuts</title>
+      <para>Each audio cart can contain one or more cuts.  A Rivendell cut is an actual piece of audio, somewhat analogous to a 'track' on a CD.  Up to 999 such cuts can exist within a single cart.  Each line in the cut list contains information about the cut, including:</para>
+      <para>Description – An arbitrary name, assignable by the user as an aid in keeping track of the content, it is roughly analogous to the 'Title' field in the cart label.</para>
+      <para>Length – The actual, measured play out length of the cut audio.  This field is set automatically by the system.</para>
+      <para>Last Played – The last date and time that the cut was aired by the RDAirPlay module.  Useful for keeping track of stale inventory.</para>
+      <para># Of Plays – The total number of times the cut has been aired by the RDAirPlay module.</para>
+      <para>Origin – The name of the host upon which the audio in the cut was last recorded, along with the date and time.</para>
+      <para>Outcue – A user settable field.  This line shows up in the RDAirPlay log when the cut is played.</para>
+      <para>3.0.1.0 Multiple Cuts in a Cart</para>
+      <para>What happens when more than one cut is placed into a cart?  The answer, in a word, is rotation.  Rotation is the ability to schedule a single cart in a log, but to have that cart play out different material at different times.  This capability has a myriad of uses.  One of the simplest, common in commercial radio facilities, is to allow multiple versions of a spot to be placed into the system, while still allowing the traffic department to have to track and schedule only one cart number.  A more sophisticated use involves use of the cut's dayparting settings, forcing different cuts to play based upon certain date/time criteria, such as day of the week or time of day.  Cut dayparting is a very powerful feature in Rivendell, and is something we will discuss shortly.</para>
+      <para>To edit the properties of a cut, either double-click its entry in the cut list, or touch it once to highlight and then touch the Cut Info/Record button.  The Record Dialog (Illustration 4) will now open up.</para>
+      <para>Roughly the upper third of the dialog is for editing the various cut parameters, the middle section is for  configuring the cut's daypart settings, and the bottom third is a record machine that can be used both to record new audio into the system and to audition any recording already made.</para>
+
+      <section>
+        <title>Cut Dayparting</title>
+        <para>Each cut in Rivendell can be dayparted on the basis of three parameters:</para>
+        <orderedlist>
+          <listitem>
+            <para>Absolute Start and End Date-Time</para>
+          </listitem>
+        </orderedlist>
+        <orderedlist>
+          <listitem>
+            <para>Relative Start and End Time</para>
+          </listitem>
+          <listitem>
+            <para>Day of the Week</para>
+          </listitem>
+        </orderedlist>
+        <para>By default, each newly created cut starts out with dayparting disabled, meaning that it will be 'eligible to play' at all times.  By clicking the Enabled button in the Air Date/Time box, an absolute start and end date for the cut can be entered, meaning that the cut will be prevented from airing in the RDAirPlay module at any time outside the range of those date-times.  Likewise, by selecting the  Enabled button in the Daypart box, start and end times (relative to the day the cut is to air) can be entered.  Cuts designated in this way will be allowed to air only within the specified range of times.  Finally, by selecting or clearing the appropriate boxes in the Day of the Week box, a cut can be designed to air only on certain days of the week.</para>
+        <para>All of the dayparting parameters can be used either singly or in combination with each other.  When combined, the resulting 'eligibility' is calculated as the logical AND of the applied dayparting limits.  For example, a cut with the 'Monday' box cleared will refuse to air on Mondays, regardless of whether any of the other daypart rules match.</para>
+        <para>It's important to remember that dayparting rules affect audio play out only within the RDAirPlay module.  You will still be able to audition and play the audio without limitation in the other Rivendell modules.</para>
+      </section>
+      <section>
+        <title>Cart and Cut Color Coding</title>
+        <para>Each cart or cut in RDLibrary is assigned a color to indicate it's 'playability' for air, as follows:</para>
+        <orderedlist>
+          <listitem>
+            <para>NO COLOR – Event will play normally</para>
+          </listitem>
+          <listitem>
+            <para>RED – Event will not play (due to dayparting or lack of audio)</para>
+          </listitem>
+          <listitem>
+            <para>GREEN – Event will play an Evergreen</para>
+          </listitem>
+        </orderedlist>
+        <para>It's important to remember that the color displayed for each event indicates playability at the instant that the event is being viewed.</para>
+      </section>
+
+      <section>
+        <title>Recording and Auditioning a Cut in the Record Dialog</title>
+        <para>The lower third of the Record Dialog is used both to audition and record audio.  To audition the cut, simply press the play button (the one with the triangular symbol).  The button should illuminate, audio should show on the bar meter and start playing immediately.  The audio will play to completion, unless either the stop button (square symbol) is pressed, or the Record Dialog is closed.</para>
+        <para>To record new material into a cut, first ensure that the Channels drop-down menu is set to record the appropriate number of channels, then touch the record button (round symbol).  If the cut contains audio that was recorded previously, a warning box will pop up at this point to inform you of this and to give you a chance to abort the recording without erasing what was previously recorded.  If Yes is selected here, the previous recording will be overwritten and no longer accessible.  The record button should now be illuminated steadily, while the play button will be flashing, indicating that the record machine is in 'ready' mode.  The bar meter will also be active to indicate input levels, and this is the point where you want to verify that your levels are correct, with peaks just into the yellow area being optimal.  Nothing is actually being recorded just yet.</para>
+        <para>We have two options for actually starting the record machine.  We can start it manually by pressing the play button, at which point the machine will immediately begin recording, or we can set the Record Mode drop-down menu to the VOX (short for voice activated) setting.  When in VOX mode, the record machine will start automatically as soon as it senses the presence of audio at the input.</para>
+        <para>Once started, recording will continue until either the stop button is pushed, or the maximum allowed length for a manual recording (set by the system administrator) has been reached.  Once stopped, if the AutoTrim drop-down menu has been set to On, the Start and End markers will be automatically set to the beginning and end of detected audio within the cut.  (We will discuss Markers in detail when we get to the section on the Edit Markers dialog).</para>
+      </section>
+    </section>
+  </section>
+  
+  <section>
+    <title>Alternative Methods of Audio Ingestion</title>
+    <para>In addition to manually recording material in realtime, RDLibrary supports two alternative methods for audio ingestion:</para>
+    <orderedlist>
+      <listitem>
+        <para>Importing from a File</para>
+      </listitem>
+      <listitem>
+        <para>Ripping from a CD</para>
+      </listitem>
+    </orderedlist>
+
+    <section>
+      <title>Importing Audio from a File</title>
+      <para>To import audio from a file directly into a cut, we start by opening the cut's parent cart in the Edit Cart Dialog.  Next, touch the cut's entry in the cut list and then touch the Import/Export button to open the Import/Export Audio Dialog (Illustration 5).</para>
+      <para>Select the file you wish to import, either by entering the path and filename to it in the Filename field or by clicking the Select button to open a file browsing dialog.  Rivendell is capable of importing the following types of audio files:</para>
+      <orderedlist>
+        <listitem>
+          <para>Microsoft WAV (*.wav) – Both PCM16 and MPEG supported</para>
+        </listitem>
+        <listitem>
+          <para>MPEG (*.mp1, *.mp2, *.mp3)</para>
+        </listitem>
+        <listitem>
+          <para>OggVorbis (*.ogg)</para>
+        </listitem>
+        <listitem>
+          <para>Free Lossless Audio Codec [FLAC] (*.flac)</para>
+        </listitem>
+      </orderedlist>
+      
+      <para>Next, set the Channels drop-down menu to the appropriate number of channels.  You may also wish to adjust the Normalize or Autotrim controls, although these will normally be set to reasonable default values by the system administrator and should seldom have to be altered.  If Normalize is selected, then the imported audio will be peak normalized to the level indicated.  The Autotrim does the same thing as in the Record Dialog (see section 2.0.1.2, 'Recording and Auditioning a Cut in the Record Dialog' above for details).</para>
+      <para>Finally, touch the Import button.  A progress bar will indicate percentage completion of the import, followed by a popup box to announce completion.  The Import Audio Dialog will automatically close after acknowledging completion.  The audio is now imported, and can now be auditioned and otherwise processed in the usual way.</para>
+    </section>
+
+    <section>
+      <title>Ripping Audio from a CD Track</title>
+      <para>To rip audio directly off of a CD into a cut, we again start by opening the cut's parent cart in the Edit Cart Dialog.  Next, select the cut's by touching the cut's entry in the cut list, and then touch the Rip button to open the Rip CD Dialog (Illustration 6).</para>
+      <para>Load a CD into the CD drive.  After a few seconds, list of tracks should appear in the Tracks area.  If the system administrator has enabled the FreeDB CD Lookup Service, the names of the various tracks may appear as well.  </para>
+      <para>Set the Channels, Normalize and Autotrim controls appropriately (see section 2.1.0 for more details on using the Normalize and Autotrim controls).  Next, touch the track you wish to rip and then press the Rip Track button.  The track will now be ripped into the cut, with a progress bar keeping you informed of progress.  When the rip is complete, a message box will pop up to inform you of this.</para>
+      <para>If FreeDB data was found for the CD, you can have the FreeDB track, artist and album names be automatically placed on the cart label for the cart by checking  Apply FreeDB Values to Cart before closing the Dialog.</para>
+    </section>
+
+    <section>
+      <title>Ripping Multiple CD Tracks at a Time</title>
+      <para>Sometimes, when transferring multiple audio tracks from CD, it's more convenient to be able to set up the entire transfer at once and then let the rip run in a 'batch' mode.  RDLibrary is capable of ripping audio in this manner as well.  To do this, click the Rip CD button near the bottom of the main RDLibrary screen, bringing up the Rip Disk Dialog (Illustration 7).</para>
+      <para>This dialog is similar in many ways to the Rip CD Dialog described above, except that each track can be assigned to transfer to a different cut by double clicking on its listing, or by touching the listing and then the Set Cut button, bringing up the Select Cut Dialog (see Illustration 8).</para>
+      <para>The destination cut is selected by first choosing the cart from the left-hand pane, followed by the desired cut within that cart on the right-hand pane.  The complete set of library filtering tools are available to you here – see section 2.2, 'Navigating the Audio Library' for details on their function, just as in the main RDLibrary screen.</para>
+      <para>Once all of the desired tracks have been assigned to cuts, be sure that the Normalize, Autotrim, Channels and Apply FreeDB Values to Carts controls have been set as desired, then click the Rip Disk button.  A set of progress bars will keep you informed of the progress of each track, as well as overall progress.  When, the rip is finished, a message box will let you know.</para>
+    </section>
+  </section>
+
+  <section>
+    <title>Macro Carts</title>
+    <para>A macro cart is a cart that contains one or more commands written in Rivendell Macro Language (or 'RML' for short).  The Edit Cart dialog for a macro cart is similar in many ways to that for an audio cart with the exception of the lower half, which contains a list of RML commands to be executed rather than a list of cuts (see Illustration 9).  (NOTE:  for a complete description of Rivendell Macro Language, including a breakdown of available commands, see Chapter Nine).</para>
+    <para>To add a new line of RML, select the desired location in the list and touch the Add button.  Similarly, a line can be deleted by selecting it and then touching the Delete button, or modified by touching the Edit button.  The RML can be tested, eight line-by-line or as a whole by touching the Run Line or Run Cart button respectively.  It is also possible to Copy and Paste individual lines both within a given cart or between carts.</para>
+  </section>
+
+  <section>
+    <title>Navigating the Audio Library</title>
+    <para>The uppermost section of RDLibrary's main window contains tools designed to allow for fast searching of the entire audio library, making locating a particular piece of audio easy even in a library containing thousands of carts.  It's possible to  control what carts are listed, as well as how they are sorted.</para>
+    
+    <section>
+      <title>Changing the Cart Sort Order</title>
+      <para>The order in which carts are displayed in the cart list can be changed by simply clicking on the header of the column by which you want them sorted by.  By default, the carts are sorted by Cart Number.  To instead sort them alphabetically by Title, simply click the TITLE header once.  To sort them by Title in reverse –i.e. from 'Z' to 'A' – click the TITLE header once again.  Clicking the TITLE header a third time restores the sort to normal 'A' to 'Z' again.  And so on for all of the columns in the cart list – it's possible to sort the Library by Artist, Length, or any other parameter shown in the cart list.</para>
+    </section>
+    <section>
+      <title>Selecting Carts by the Filter Field</title>
+      <para>Very often, one will want to find a cart or set of carts whose label(s) contains a particular word or phrase.  It's possible to narrow the list of displayed carts to this set by simply entering the desired word or phrase into the Filter field at the top of the main RDLibrary screen.  The full list can be restored by clearing the Filter field or by clicking the Clear button.</para>
+    </section>
+    <section>
+      <title>Selecting Carts by Group</title>
+      <para>It's possible to limit the list of carts to only those in a particular group by setting the Group drop-down menu to the desired group name.</para>
+    </section>
+    <section>
+      <title>Selecting Carts by Type</title>
+      <para>You can tell RDLibrary what type of carts to list by checking the Show Audio Carts and Show Macro Carts boxes.  Clearing both boxes obviously results in no carts at all being displayed.</para>
+      <para>It's also possible to combine all four of the above search and sorting methods.</para>
+    </section>
+    <section>
+      <title>Selecting and Opening Carts</title>
+      <para>Once the desired cart has been located on the cart list, load it into the Edit Cart Dialog (Illustration 3) by either double clicking its list entry, or by touching its list entry and then touching the Edit button.</para>
+    </section>
+  </section>
+  
+  <section>
+    <title>Library Maintenance</title>
+    <section>
+      <title>Editing Markers</title>
+      <para>Rivendell uses a system of cue points within audio cuts, referred to as markers.  Markers can be used to specify a number of parameters for a piece of audio.    Table One shows what markers are available, their purpose and their corresponding color.</para>
+      <para>Markers are set in the Edit Markers Dialog (see Illustration 10).  To access the Dialog, open an audio cart, select the cut to open on the cut list and then touch the Edit button.</para>
+      <para>The Dialog is divided into three areas:  the waveform area in the upper half, consisting of the waveform display and Amplitude and Time buttons; the transport controls area in the center, consisting of Start, Pause, Stop and Loop buttons along with an audio meter; and the marker button area in the lower third of the window, consisting of controls for selecting and positioning markers.  </para>
+      <para>It's possible to 'zoom-in' on the waveform in various ways by clicking the Amplitude and Time buttons.  By default, the waveform is displayed fully 'zoomed-out', thus showing the entire length of the audio cut.  The GoTo buttons can be used to jump directly to the current play out cursor position, start or end of the waveform.</para>
+      <para>Audio can be played one of two ways:  either by clicking on the waveform to indicate where play out should start and then clicking the left-hand Play button, causing play out to start from the selected position, or by clicking the right-hand Play button, which will cause play out to start from the Start Marker (just as it would in RDAirPlay).  Clicking the Pause button while playing will cause audio to stop and the play out cursor (a thin vertical black line in the waveform area) to freeze at its current position, while pressing the Stop button will stop the audio while resetting the play out cursor to the position it was in when Play was started.  Clicking the Loop button will cause the audio to play out continuously, looping from end back to start, until either the Stop, Pause, Save or Cancel buttons are clicked.</para>
+      <para>To set a marker, click on the corresponding marker button and then left-click on the waveform area to indicate where on the audio the marker should be placed.  (NOTE:  With the exception of the FadeUp and FadeDown markers, all markers in</para>
+      <table frame="all" id="MarkerTypes">
+        <title>Rivendell Marker Types</title>
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry><para>Marker Type</para></entry><entry><para>Function</para></entry><entry><para>Color</para></entry>
+            </row>
+        </thead>
+        <tbody>
+        <row><entry><para>Start / Stop</para></entry><entry><para>Indicates start and end points of audio.</para></entry><entry><para>RED</para></entry></row>
+        <row><entry><para>TalkStart / TalkStop</para></entry><entry><para>Indicates point to start and stop the Talk Counter in RDAirPlay.</para></entry><entry><para>BLUE</para></entry></row>
+        <row><entry><para>SegueStart / SegueEnd</para></entry><entry><para>Indicates the start and end of the audio overlap during Segue transitions in RDAirPlay.</para></entry><entry><para>CYAN</para></entry></row>
+        <row><entry><para>HookStart / HookEnd</para></entry><entry><para>Not used at present.</para></entry><entry><para>VIOLET</para></entry></row>
+        <row><entry><para>FadeUp</para></entry><entry><para>Indicates the point at which audio should be faded up to full level after starting in RDAirPlay.</para></entry><entry><para>YELLOW</para></entry></row>
+        <row><entry><para>FadeDown</para></entry><entry><para>Indicates the point at which audio should start fading down to off before ending in RDAirPlay.</para></entry><entry><para>YELLOW</para></entry></row>
+        </tbody>
+        </tgroup>
+      </table>
+
+      <para>Rivendell are assigned in pairs.  For example, placing a TalkStart marker will also cause a TalkEnd marker to be placed.)  Markers that have already been placed can be moved by selecting the appropriate marker button and then dragging the marker to the desired location.  It's also possible to specify the position of a marker in the form of hh:mm:ss.s (relative to time after the Start marker) by entering the desired value next to a selected marker button.  It is also possible to remove a set of markers that have already been placed, either by accessing the marker menu by doing a right-click on the waveform display, or by touching the Remove Marker button and then touch the marker button corresponding to the marker to be removed.  (NOTE: the exceptions to this are the Start / End markers, which are always present and hence cannot be removed.)</para>
+      <para>As an aid for accurately setting the Start and End markers, it's possible to use the Trim Start and Trim End buttons to automatically set the markers to the first and last instances of the level specified by the Threshold field, respectively.</para>
+    </section>
+    <section>
+      <title>Copying and Pasting Audio from Cut to Cut</title>
+      <para>It's possible to make copies of existing an audio cut on the system by opening up the cut's parent cart in the Edit Cart Dialog, selecting it on the cut list and clicking the Copy button.  To paste the copied audio, simply select the desired destination cut (within the same cart or a different one) and press Paste.</para>
+    </section>
+  </section>
+  <section>
+    <title>Generating Library Reports</title>
+    <para>Various Library reports can be generated by touching the Reports button on the main RDLibrary screen and then selecting the desired report and touching the Generate button.  The following reports are available:</para>
+    <section>
+      <title>The Cart Report</title>
+      <para>The cart report consists of a list of all selected carts on the system, with their attributes.</para>
+    </section>
+    <section>
+      <title>The Cut Report</title>
+      <para>The cut report consists of a list of all cuts contained by the selected carts on the system, with their attributes.</para>
+    </section>
+    <section>
+      <title>The Cart Data Dump</title>
+      <para>The cart data dump is a special type of report that consists of column-aligned data elements, one line per cut for the selected carts on the system.  It is intended for use where a 'dump' of available carts in the system is desired for import into an external system (such as a music scheduling system).</para>
+    </section>
+  </section>
+</chapter>

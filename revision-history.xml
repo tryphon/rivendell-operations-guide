@@ -1,0 +1,104 @@
+<revinfo>
+  <title>Document Change History</title>
+
+  <revision>
+    <date>2005-11-28</date>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@salemradiolabs.com</email>
+    </author>
+    <revremark>Initial document release, Chapters 1 -3</revremark>
+  </revision>
+
+  <revision>
+    <date>2006-09-27</date>
+    <revnumber>0.9</revnumber>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@salemradiolabs.com</email>
+    </author>
+    <revremark>Released full document as version 0.9</revremark>
+  </revision>
+
+  <revision>
+    <date>2006-10-10</date>
+    <author>
+      <personname><firstname>Robert</firstname><surname>Orr</surname></personname>
+      <email>orrrobert@gmail.com</email>
+    </author>
+    <revremark>Fixed various typos</revremark>
+  </revision>
+
+  <revision>
+    <date>2006-10-10</date>
+    <revnumber>0.9.1</revnumber>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@salemradiolabs.com</email>
+    </author>
+    <revremark>Added a title and Change History pages</revremark>
+  </revision>
+
+  <revision>
+    <date>2006-10-10</date>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@salemradiolabs.com</email>
+    </author>
+    <revremark>Added the '&lt;skip-meta&gt;' parameter to the Start Next [PN] RML</revremark>
+  </revision>
+
+  <revision>
+    <date>2006-10-18</date>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@salemradiolabs.com</email>
+    </author>
+    <revremark>Added the Refresh Log [RL] RML</revremark>
+  </revision>
+
+  <revision>
+    <date>2006-10-20</date>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@salemradiolabs.com</email>
+    </author>
+    <revremark>Added the Toggle On Air Flag [TA] RML</revremark>
+  </revision>
+
+  <revision>
+    <date>2006-10-28</date>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@salemradiolabs.com</email>
+    </author>
+    <revremark>Updated for Rivendell v0.9.76</revremark>
+  </revision>
+
+  <revision>
+    <date>2008-10-23</date>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@paravelsystems.com</email>
+    </author>
+    <revremark>Updated for Rivendell v1.1.0. Added 'Start Record Deck' [RS] and 'Stop Record Deck' [RR] RMLs. Added the '--metadata-pattern' switch and wildcard for RDImport</revremark>
+  </revision>
+
+  <revision>
+    <date>2009-03-18</date>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@paravelsystems.com</email>
+    </author>
+    <revremark>Added 'Message Box; ['MB'] RML</revremark>
+  </revision>
+
+  <revision>
+    <date>2011-11-01</date>
+    <author>
+      <personname><firstname>Fred</firstname><surname>Gleason</surname></personname>
+      <email>fredg@paravelsystems.com</email>
+    </author>
+    <revremark>Added 'Connect JACK Ports' ['JC'] and 'Disconnect JACK Ports' RMLs</revremark>
+  </revision>
+</revinfo>

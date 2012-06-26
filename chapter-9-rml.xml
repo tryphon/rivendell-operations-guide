@@ -1,0 +1,306 @@
+<chapter>
+  <title>Rivendell Macro Langauge</title>
+  <section>
+    <title>Overview</title>
+    <para>Rivendell Macro Language (or RML for short) is a set of commands implemented within Rivendell that can be used to program the system to take various actions.  A wide variety of commands exist, ranging from control of outboard gear (such as switchers and GPIO devices) to control of various aspects of log playout in RDAirPlay, to Rivendell user management.</para>
+  </section>
+  <section>
+    <title>Command Structure </title>
+    <para>Each RML command in its native form consists of a two-letter code, followed by zero or more arguments (separated by spaces) and terminated with a '!' character.  For example, the 'Play Next' RML looks like this:</para>
+    <para>        PN 1!</para>
+    <para>This command would cause the Main Log machine in RDAirPlay to start the next event in the log.  A full list of all available RMLs can be found in the section 9.3.</para>
+  </section>
+  <section>
+    <title>Specifying Color</title>
+    <para>Some RMLs take a color value as one of their arguments.  The following colors are available:</para>
+    <para>        white                        black</para>
+    <para>        red                        darkRed</para>
+    <para>        green                        darkGreen</para>
+    <para>        blue                        darkBlue</para>
+    <para>        cyan                        darkCyan</para>
+    <para>        magenta                darkMagenta</para>
+    <para>        yellow                darkYellow</para>
+    <para>        gray                        darkGray</para>
+    <para>        lightGray</para>
+  </section>
+  <section>
+    <title>Available Commands</title>
+    <para>NOTE: not all commands shown will be available for all types of hardware (this is particularly true of the GPIO and Switcher commands).  For an up-to-date listing of hardware devices supported by Rivendell, along with supported RML functionality for each, consult the 'SWITCHERS.txt' and 'GPIO.txt' files in the Rivendell documentation directory.</para>
+
+    <!-- FIXME -->
+
+    <para>ADD NEXT</para>
+    <para>Code: PX</para>
+    <para>Syntax:</para>
+    <para>        PX &lt;mach&gt; &lt;cart&gt;!</para>
+    <para>Insert cart &lt;cart&gt; in the next to play position on RDAirPlay log machine &lt;mach&gt;.  Values for &lt;mach&gt; are:  1 = Main Log, 2 = Aux 1 Log, 3 = Aux 2 Log. </para>
+    <para>BINARY SERIAL OUT </para>
+    <para>Code: BO</para>
+    <para>Syntax:  </para>
+    <para>        BO &lt;port-num&gt; &lt;hex-code&gt; &lt;...&gt;!</para>
+    <para>Output a string of binary codes represented by &lt;hex-code&gt; &lt;...&gt; on serial port &lt;port-num&gt;!</para>
+    <para>CLEAR SERIAL TRAP</para>
+    <para>Code: SC</para>
+    <para>Syntax:</para>
+    <para>        SC &lt;port&gt; &lt;cart&gt; &lt;string&gt;!</para>
+    <para>        SC &lt;port&gt; &lt;cart&gt;!</para>
+    <para>        SC &lt;port&gt;!</para>
+    <para>Clear a serial trap.  The three argument form will clear all traps on &lt;port&gt; that reference &lt;cart&gt; and &lt;string&gt;.  The two argument form will clear all traps on &lt;port&gt; that reference &lt;cart&gt;, while the one argument form will clear all traps on &lt;port&gt;.</para>
+    <para>COMMAND SEND</para>
+    <para>Code: CC</para>
+    <para>Syntax:</para>
+    <para>        CC &lt;dest&gt; &lt;rml&gt;!</para>
+    <para>Send the RML command &lt;rml&gt; to &lt;dest&gt;.  &lt;dest&gt; may be either a Rivendell host name or an IP address. </para>
+    <para>CONNECT JACK PORTS</para>
+    <para>Mnemonic: JC</para>
+    <para>Syntax:</para>
+    <para>        JC &lt;output-port&gt; &lt;input-port&gt;!</para>
+    <para>Attempt to connect JACK input port &lt;input-port&gt; to &lt;output-port&gt;.</para>
+    <para>DISCONNECT JACK PORTS</para>
+    <para>Mnemonic: JD</para>
+    <para>Syntax:</para>
+    <para>        JD &lt;output-port&gt; &lt;input-port&gt;!</para>
+    <para>Attempt to disconnect JACK input port &lt;input-port&gt; to &lt;output-port&gt;.</para>
+    <para>CONSOLE LABEL</para>
+    <para>Code: CL</para>
+    <para>Syntax:</para>
+    <para>        CL &lt;matrix&gt; &lt;surface&gt; &lt;chan&gt; &lt;label&gt;!</para>
+    <para>On matrix &lt;matrix&gt;, set the input &lt;chan&gt; module label of control surface &lt;surface&gt; to &lt;label&gt;.</para>
+    <para>DATABASE BACKUP</para>
+    <para>Code: DB</para>
+    <para>Syntax:</para>
+    <para>        DB &lt;path-name&gt;!</para>
+    <para>Create a backup copy of the active Rivendell database in &lt;pathname&gt;. </para>
+    <para>(WARNING: use of this RML is deprecated, as generating backups from a live Rivendell database can cause system pauses).</para>
+    <para>EXECUTE CART</para>
+    <para>Code: EX</para>
+    <para>Syntax:</para>
+    <para>        EX &lt;cart&gt;!</para>
+    <para>Execute macro cart &lt;cart&gt; on the local host.</para>
+    <para>FIRE SALVO</para>
+    <para>Code: FS</para>
+    <para>Syntax:</para>
+    <para>        FS &lt;matrix&gt; &lt;salvo-num&gt;!</para>
+    <para>Fire salvo number &lt;salvo-num&gt; on matrix &lt;matrix&gt;.</para>
+    <para>GPI ENABLE</para>
+    <para>Mnemonic: GE</para>
+    <para>Syntax:</para>
+    <para>        GE &lt;matrix&gt; &lt;type&gt; &lt;gpi-num&gt; &lt;state&gt;!</para>
+    <para>Enable or disable the GPI line of type &lt;type&gt; indicated by &lt;gpi-num&gt; on matrix &lt;matrix&gt;.  Possible types are I=Input, O=Output.</para>
+    <para>GPI ENABLE  (old format, deprecated)</para>
+    <para>Code: GE</para>
+    <para>Syntax:</para>
+    <para>        GE &lt;matrix&gt; &lt;gpi-num&gt; &lt;state&gt;!</para>
+    <para>Enable or disable the GPI line indicated by &lt;gpi-num&gt; on matrix &lt;matrix&gt;.</para>
+    <para>GPI SET</para>
+    <para>Mnemonic:  GI</para>
+    <para>Syntax:  </para>
+    <para>        GI &lt;matrix&gt; &lt;type&gt; &lt;gpi-num&gt; &lt;state&gt; &lt;cart&gt;!</para>
+    <para>Issue the macro cart &lt;cart&gt; upon transition of the GPIO of type &lt;type&gt; and line &lt;gpi-num&gt; on matrix &lt;matrix&gt; to &lt;state&gt;.  Possible types are I=Input, O=Output.</para>
+    <para>GPI SET  (old format, deprecated)</para>
+    <para>Code:  GI</para>
+    <para>Syntax:  </para>
+    <para>        GI &lt;matrix&gt; &lt;gpi-num&gt; &lt;state&gt; &lt;cart&gt;!</para>
+    <para>Issue the macro cart &lt;cart&gt; upon transition of the GPI line &lt;gpi-num&gt; on matrix &lt;matrix&gt; to &lt;state&gt;.</para>
+    <para>GPO SET</para>
+    <para>Mnemonic: GO</para>
+    <para>Syntax:  </para>
+    <para>        GO &lt;matrix&gt; &lt;type&gt; &lt;gpo-num&gt; &lt;state&gt; &lt;length&gt;!</para>
+    <para>Command GPIO line &lt;gpo-num&gt; of type &lt;type&gt; on matrix &lt;matrix&gt; to &lt;state&gt; for &lt;length&gt; mS.  A length of '0' indicates to hold the state indefinitely.  Possible types are I=Input, O=Output.  Possible states are 0=OFF, 1=ON, -1=passthrough hardware input.  The 'passthrough' state is valid only for the Input type –i.e. &lt;type&gt;=I.</para>
+    <para>GPO SET  (old format, deprecated)</para>
+    <para>Code: GO</para>
+    <para>Syntax:  </para>
+    <para>        GO &lt;matrix&gt; &lt;gpo-num&gt; &lt;state&gt; &lt;length&gt;!</para>
+    <para>Command GPO line &lt;gpo-num&gt; on matrix &lt;matrix&gt; to &lt;state&gt; for &lt;length&gt; mS.  A length of '0' indicates to hold the state indefinetly.</para>
+    <para>INSERT SERIAL TRAP</para>
+    <para>Code: SI</para>
+    <para>Syntax:</para>
+    <para>        SI &lt;port&gt; &lt;cart&gt; &lt;string&gt;!</para>
+    <para>Insert a serial trap to execute the macro cart &lt;cart&gt; upon receipt of &lt;string&gt; on serial port &lt;port&gt;.</para>
+    <para>LOAD LOG</para>
+    <para>Code: LL</para>
+    <para>Syntax:</para>
+    <para>        LL &lt;mach&gt; &lt;log&gt; [&lt;start-line&gt;]!</para>
+    <para>Load the log &lt;log&gt; in RDAirPlay log machine &lt;mach&gt;.  After loading, start the log at line &lt;start-line&gt; if it is &gt;=0.  Default &lt;start-line&gt;=-1.  Values for &lt;mach&gt; are:  1 = Main Log, 2 = Aux 1 Log, 3 = Aux 2 Log. </para>
+    <para>LOAD PANEL</para>
+    <para>Code: PE</para>
+    <para>Syntax:</para>
+    <para>        PE &lt;panel&gt; &lt;column&gt; &lt;row&gt; &lt;cart&gt;!</para>
+    <para>Load cart &lt;cart&gt; into the RDAirPlay SoundPanel button at &lt;column&gt;,&lt;row&gt; of panel &lt;panel&gt;.  &lt;panel&gt; should be specified with a type identifier to indicate “system” or “user”, e.g. 's1' or 'u2'</para>
+    <para>LOGIN</para>
+    <para>Code: LO</para>
+    <para>Syntax:</para>
+    <para>        LO!</para>
+    <para>        LO &lt;user&gt; &lt;password&gt;!</para>
+    <para>Set the current Rivendell user to &lt;user&gt;.  If no arguments are supplied, log out the host –i.e. Revert to the default user. </para>
+    <para>MAKE NEXT</para>
+    <para>Code: MN</para>
+    <para>Syntax:</para>
+    <para>        MN &lt;mach&gt; &lt;line&gt;!</para>
+    <para>Set the next event for RDAirPlay log machine &lt;mach&gt; to line &lt;line&gt;.  Values for &lt;mach&gt; are:  1 = Main Log, 2 = Aux 1 Log, 3 = Aux 2 Log. </para>
+    <para>MESSAGE BOX</para>
+    <para>Code: MB</para>
+    <para>Syntax:</para>
+    <para>        MB &lt;display&gt; &lt;severity&gt; &lt;msg&gt;!</para>
+    <para>Display the text &lt;msg&gt; in a popup window on X display &lt;display&gt;, with an icon to indicate &lt;severity&gt;.  Valid values of &lt;severity&gt; are:</para>
+    <para>        1 – Information</para>
+    <para>        2 – Warning</para>
+    <para>        3 - Critical</para>
+    <para>PLAY PANEL</para>
+    <para>Code: PP</para>
+    <para>Syntax:</para>
+    <para>        PP &lt;panel&gt; &lt;column&gt; &lt;row&gt;!</para>
+    <para>Play the RDAirPlay button at &lt;column&gt;,&lt;row&gt; of panel &lt;panel&gt;.  &lt;panel&gt; should be specified with a type identifier to indicate “system” or “user”.  For example, to start a button in the second column, third row of panel U:1, one would send:  PP U1 2 3!</para>
+    <para>RUN SHELL COMMAND</para>
+    <para>Code: RN</para>
+    <para>Syntax:</para>
+    <para>        RN &lt;shell-cmd&gt;!</para>
+    <para>Run the shell command &lt;shell-cmd&gt;.  The command will run with the permissions of the Rivendell user as configured in rd.conf(5).</para>
+    <para>REFRESH LOG</para>
+    <para>Code: RL</para>
+    <para>Syntax:</para>
+    <para>        RL &lt;mach&gt;!</para>
+    <para>Refresh a log.  Values for &lt;mach&gt; are:  1 = Main Log, 2 = Aux 1 Log, 3 = Aux 2 Log. </para>
+    <para>SELECT WIDGET</para>
+    <para>Code: PW</para>
+    <para>Syntax:</para>
+    <para>        PW &lt;mach&gt;|0!</para>
+    <para>Select the RDAirPlay right-hand widget to log-machine &lt;mach&gt; or '0' for sound panel.  Values for &lt;mach&gt; are:  1 = Main Log, 2 = Aux 1 Log, 3 = Aux 2 Log. </para>
+    <para>SERIAL OUT </para>
+    <para>Code: SO</para>
+    <para>Syntax:  </para>
+    <para>        SO &lt;port-num&gt; &lt;string&gt;!</para>
+    <para>Output &lt;string&gt; on serial port &lt;port-num&gt;!</para>
+    <para>SERIAL RELOAD</para>
+    <para>Code: SY</para>
+    <para>Syntax:</para>
+    <para>        SY &lt;port-num&gt;!</para>
+    <para>Reload the configuration for the indicated serial port.  Normally, this should only be issued by RDAdmin following a configuration change.</para>
+    <para>SET COLOR LABEL</para>
+    <para>Code: LC</para>
+    <para>Syntax:</para>
+    <para>        LC &lt;color&gt; &lt;string&gt;!</para>
+    <para>Display &lt;string&gt; in color &lt;color&gt; in the label area of RDAirPlay. </para>
+    <para>SET DISPLAY</para>
+    <para>Code: SD</para>
+    <para>Syntax:</para>
+    <para>        SD &lt;matrix&gt; &lt;display&gt; &lt;line&gt; &lt;col&gt; &lt;attr&gt; &lt;label&gt;!</para>
+    <para>On matrix &lt;matrix&gt;, set the console display &lt;display&gt; to &lt;label&gt;, starting at position &lt;line&gt;,&lt;col&gt; and using message attributes &lt;attr&gt;.</para>
+    <para>The message attributes value is constructed as follows:</para>
+    <para>        Bit 7 – Display mode</para>
+    <para>        Bit 6,5 – Video attribute</para>
+    <para>        Bits 2,1,0 – Message Text Color</para>
+    <para>Display Mode:         0 – overwrite text</para>
+    <para>                1 – insert text</para>
+    <para>Video Attribute:        00 – normally</para>
+    <para>                01 – flash</para>
+    <para>                02 – reverse</para>
+    <para>Text Color:        000 - White</para>
+    <para>                001 - Red</para>
+    <para>                010 - Yellow</para>
+    <para>                011 - Green</para>
+    <para>                100 - Cyan</para>
+    <para>                101 – Magenta</para>
+    <para>SET LABEL</para>
+    <para>Code: LB</para>
+    <para>Syntax:</para>
+    <para>        LB &lt;string&gt;!</para>
+    <para>Display &lt;string&gt; in the label area of RDAirPlay. </para>
+    <para>SET MODE</para>
+    <para>Code: PM</para>
+    <para>Syntax:</para>
+    <para>        PM &lt;mode&gt;!</para>
+    <para>Set the RDAirPlay mode &lt;mode&gt;.  1 = LiveAssist, 2 = Auto, 3 = Manual.</para>
+    <para>SLEEP</para>
+    <para>Code: SP</para>
+    <para>Syntax:</para>
+    <para>        SP &lt;msecs&gt;!</para>
+    <para>Wait for &lt;msecs&gt; milliseconds.</para>
+    <para>START</para>
+    <para>Code: PL</para>
+    <para>Syntax:</para>
+    <para>        PL &lt;mach&gt; &lt;line&gt;!</para>
+    <para>Start RDAirPlay log machine &lt;mach&gt; at line &lt;line&gt; if stopped, otherwise do nothing.  Values for &lt;mach&gt; are:  1 = Main Log, 2 = Aux 1 Log, 3 = Aux 2 Log. </para>
+    <para>START BUTTON</para>
+    <para>Code: PB</para>
+    <para>Syntax:</para>
+    <para>        PB &lt;button&gt;!</para>
+    <para>Push button number &lt;button&gt; on RDAirPlay's button widget.</para>
+    <para>START NEXT</para>
+    <para>Code: PN</para>
+    <para>Syntax:</para>
+    <para>        PN &lt;mach&gt; [&lt;mport&gt;] [&lt;skip-meta&gt;]!</para>
+    <para>Start RDAirPlay log machine &lt;mach&gt; if stopped, or start next event if already running.  If specified, start the playout on machine port &lt;mport&gt;.  Values for &lt;mach&gt; are:  1 = Main Log, 2 = Aux 1 Log, 3 = Aux 2 Log.   If &lt;skip-meta&gt; is supplied, equal to '1' and the log machine is in Manual or Live Assist mode, then any intervening meta-events in the log between the current 'next' event and the next cart will be skipped over.</para>
+    <para>START RECORD DECK</para>
+    <para>Mneumonic:  RS</para>
+    <para>Syntax:</para>
+    <para>        RS &lt;deck-num&gt; &lt;cart-num&gt; &lt;cut-num&gt; &lt;max_len&gt;!</para>
+    <para>Start recording to cut &lt;cut-num&gt; of cart &lt;cart-num&gt;, using RDCatch record deck &lt;deck-num&gt; for a maximum time of &lt;max-len&gt; mS.  The record parameters used (format, sample rate, channels, etc) will be those configured for the selected deck in RDAdmin-&gt;ManageHosts-&gt;RDCatch.  The selected cart and cut must already exist.  Any audio previously residing in the selected cart and cut will be overwritten.</para>
+    <para>STOP </para>
+    <para>Code: PS</para>
+    <para>Syntax:</para>
+    <para>        PS &lt;mach&gt;|0!</para>
+    <para>Stop log machine &lt;mach&gt;.  Values for &lt;mach&gt; are:  1 = Main Log, 2 = Aux 1 Log, 3 = Aux 2 Log, 0 = ALL. </para>
+    <para>STOP PANEL</para>
+    <para>Code: PT</para>
+    <para>Syntax:</para>
+    <para>        PT &lt;panel&gt; &lt;column&gt; &lt;row&gt;!</para>
+    <para>Stop the RDAirPlay SoundPanel button button at &lt;column&gt;,&lt;row&gt; of panel &lt;panel&gt;.  &lt;panel&gt; should be specified with a type identifier to indicate “system” or “user”, e.g. 's1' or 'u2'</para>
+    <para>STOP RECORD DECK</para>
+    <para>Mneumonic:  RR</para>
+    <para>Syntax:</para>
+    <para>        RR &lt;deck-num&gt;!</para>
+    <para>Stop any active recording on RDCatch deck &lt;deck-num&gt;.</para>
+    <para>SWITCH ADD </para>
+    <para>Code: SA</para>
+    <para>Syntax:</para>
+    <para>        SA &lt;matrix&gt; &lt;source&gt; &lt;dest&gt;!</para>
+    <para>Command switch matrix number &lt;matrix&gt; to add input number &lt;source&gt; to output number &lt;dest&gt;.  Unlike SWITCH TAKE, this command leaves any other previously assigned inputs unchanged.</para>
+    <para>SWITCH ADD WITH GAIN</para>
+    <para>Code: SG</para>
+    <para>Syntax:</para>
+    <para>        SG &lt;matrix&gt; &lt;source&gt; &lt;dest&gt; &lt;gain&gt;!</para>
+    <para>Command switch matrix number &lt;matrix&gt; to add input number &lt;source&gt; to output number &lt;dest&gt; at gain &lt;gain&gt;.  The gain is specified in 1/10 of a dB, with 0 = unity gain.  Unlike SWITCH TAKE, this command leaves any other previously assigned inputs unchanged.</para>
+    <para>SWITCH LEVEL</para>
+    <para>Code: SL</para>
+    <para>Syntax:</para>
+    <para>        SL &lt;matrix&gt; &lt;source&gt; &lt;level&gt;!</para>
+    <para>Command switch matrix number &lt;matrix&gt; to adjust the gain of input number &lt;source&gt; to &lt;level&gt; dB.</para>
+    <para>SWITCH CROSSPOINT GAIN</para>
+    <para>Code: SX</para>
+    <para>Syntax:</para>
+    <para>        SX &lt;matrix&gt; &lt;source&gt; &lt;dest&gt; &lt;level&gt;!</para>
+    <para>Command switch matrix number &lt;matrix&gt; to adjust the gain of the crosspoint connecting input &lt;source&gt; to output &lt;dest&gt; to &lt;level&gt; dB.</para>
+    <para>SWITCH RELOAD</para>
+    <para>Code: SZ</para>
+    <para>Syntax:</para>
+    <para>        SZ &lt;matrix&gt;!</para>
+    <para>Reload the configuration for the indicated matrix.  Normally, this should only be issued by RDAdmin following a configuration change.</para>
+    <para>SWITCH REMOVE</para>
+    <para>Code: SR</para>
+    <para>Syntax:</para>
+    <para>        SR &lt;matrix&gt; &lt;source&gt; &lt;dest&gt;!</para>
+    <para>Command switch matrix number &lt;matrix&gt; to remove input number &lt;source&gt; from output number &lt;dest&gt;.  Unlike SWITCH TAKE, this command leaves any other previous assigned inputs unchanged.</para>
+    <para>SWITCH TAKE </para>
+    <para>Code: ST</para>
+    <para>Syntax:</para>
+    <para>        ST &lt;matrix&gt; &lt;source&gt; &lt;dest&gt;!</para>
+    <para>Command switch matrix number &lt;matrix&gt; to take input number &lt;source&gt; to output number &lt;dest&gt;.  “Take” in this context implies removing any previously assigned inputs from the referenced output.</para>
+    <para>TOGGLE ON AIR FLAG</para>
+    <para>Code: TA</para>
+    <para>Syntax:</para>
+    <para>        TA 0|1!</para>
+    <para>Set the On-Air flag in RDAirPlay to ON [1] or OFF [0].</para>
+    <para>UDP OUT</para>
+    <para>Code: UO</para>
+    <para>Syntax:</para>
+    <para>        UO &lt;ip-addr&gt; &lt;udp-port&gt; &lt;string&gt;!</para>
+    <para>Send &lt;string&gt; in a UDP packet to port &lt;udp-port&gt; at &lt;ip-addr&gt;.</para>
+  </section>
+  <section>
+    <title>RML Command Index</title>
+    <!-- FIXME -->
+    <para>                        </para>
+    <para>                                        </para>
+  </section>
+</chapter>

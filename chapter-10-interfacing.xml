@@ -1,0 +1,96 @@
+<chapter>
+  <title>Interfacing with the Linux Ecosystem:  RMLSend and RDImport</title>
+  <section>
+    <title>RMLSend</title>
+    <para>RMLSend is a small utility that can be used to send RML commands to a local or remote Rivendell host.  It can operate in two modes:  GUI or a command line interface (CLI).</para>
+    <para>If started with no arguments, RMLSend will come up in GUI mode (see Illustration 65).</para>
+    <para>The Sent To: should have the name or IP address of the system to which to send the RML.  Dest: controls the method by which the command will be sent.  'RML' is standard RML transmission that returns an echo code to indicate success/failure.  'RML (No echo)' does not return an echo code, while 'Set Port' allows the destination UDP port to be set (useful for controlling Rivendell from outside firewalls).  Command: is the RML command to be sent, and Response: will show any echo code returned from the remote system (or 'No response' if no reply is received).  Touching the Send Command button actually sends the command.</para>
+    <para>RMLSend also has a full-featured command-line facility that allows Rivendell commands to be sent using the standard Linux CLI utilities.  The command-line syntax is:</para>
+    <!-- FIXME -->
+    <para>rmlsend [--to-host=&lt;hostname&gt;] [--to-port=&lt;port&gt;] [&lt;rml&gt;|--from-file=&lt;file&gt;]</para>
+    <para>Where:</para>
+    <para>&lt;hostname&gt;         name or IP address of the host to send the command to</para>
+    <para>       &lt;port&gt;          UDP port to to send the message to</para>
+    <para>          &lt;rml&gt;         any valid RML code</para>
+    <para>        &lt;file&gt;         name of a file containing valid RML code.  If '-' is specified as &lt;file&gt;, then </para>
+    <para>                rmlsend will read the list of RML commands to be sent from standard </para>
+    <para>                input.</para>
+    <para>When specifying RML code on the command line, it will likely be necessary to escape any special characters (such as spaces or bang [!] characters) to protect them from the shell.</para>
+    <para>Examples:</para>
+    <para> rmlsend LL\ TestLog\!</para>
+    <para>    Send the RML command 'LL 1 TestLog!' to the local host.</para>
+    <para> rmlsend --to-host=host.example.com --to-port=5858 --from-file=test.rml</para>
+    <para>    Send the RML commands in 'test.rml' to the system at 'host.example.com' at</para>
+    <para>    port 5858.</para>
+    <para>The above information can also be displayed on the command line by doing:</para>
+    <para>        rmlsend –help</para>
+  </section>
+  <section>
+    <title>RDImport</title>
+    <para>RDImport is a command-line interface (CLI) program that can be used to import audio material into the Rivendell Library.  It is particularly useful in situations where a large number of audio files need to be imported in an automated fashion, and is capable of importing thousands of files with a single command-line invocation.</para>
+    <para>The syntax for invoking RDImport is:</para>
+    <!-- FIXME -->
+    <para>rdimport [options] &lt;group&gt; &lt;filespec&gt; [,&lt;filespec&gt;]*</para>
+    <para>Where:</para>
+    <para>&lt;group&gt;        The name of a Rivendell group</para>
+    <para>&lt;filespec&gt;        A file name or specification.  All of the usual regex tricks work. A</para>
+    <para>                &lt;filespec&gt; of '-' will cause RDImport to read the list of filespecs from </para>
+    <para>                standard input. </para>
+    <para>The following options are available:</para>
+    <para> --verbose</para>
+    <para>     Print progress messages during processing.</para>
+    <para> --normalization-level=&lt;level&gt;</para>
+    <para>     Specify the level to use for normalizing the audio, in dBFS.</para>
+    <para>     Specifying '0' will turn off normalization.  By default, RDImport will use the         </para>
+    <para>     normalization level specified in RDAdmin-&gt;ManageHosts-&gt;RDLibrary.</para>
+    <para> --autotrim-level=&lt;level&gt;</para>
+    <para>     Specify the threshold level to use for autotrimming the audio, in dBFS.  Specifying '0'</para>
+    <para>     will turn off autotrimming.  By default, RDImport will use the autotrim level specified </para>
+    <para>     in RDAdmin-&gt;ManageHosts-&gt;RDLibrary.</para>
+    <para> --single-cart</para>
+    <para>     If more than one file is imported, place them within multiple cuts within a single cart,</para>
+    <para>     rather than creating separate carts for each file.</para>
+    <para> --to-cart=&lt;cartnum&gt;</para>
+    <para>     Specify the cart to import the audio into, rather than using the next available cart </para>
+    <para>     number for the group.  If the cart does not exist, it will be created.  Each file will be </para>
+    <para>     imported into a separate new cut within the cart.  Use of this option implies the</para>
+    <para>     --single-cart option as well.</para>
+    <para> --delete-source</para>
+    <para>     Delete each source file after successful import.  Use with caution!</para>
+    <para> --delete-cuts</para>
+    <para>     Delete all cuts within the destination cart before importing.  Use with caution!</para>
+    <para> --drop-box</para>
+    <para>     Operate in DropBox mode.  RDImport will run continuously, periodically scanning           </para>
+    <para>     for the specified files, importing and then deleting them when found.  WARNING:  </para>
+    <para>     use of this option also implies the --delete-source option!</para>
+    <para> --metadata-pattern=&lt;pattern&gt;</para>
+    <para>     Attempt to read metadata parameters from the source filename, using</para>
+    <para>     the pattern &lt;pattern&gt;.  Patterns consist of a sequence of macros and</para>
+    <para>     regular characters to indicate boundaries between metadata fields.</para>
+    <para>     The available macros are:</para>
+    <para>          %a - Artist</para>
+    <para>          %b - Record Label</para>
+    <para>          %c - Client</para>
+    <para>          %e - Agency</para>
+    <para>          %g - Rivendell Group</para>
+    <para>          %l - Album</para>
+    <para>          %m - Composer</para>
+    <para>          %n - Rivendell Cart Number</para>
+    <para>          %p - Publisher</para>
+    <para>          %t - Title</para>
+    <para>          %u - User Defined</para>
+    <para>          %% - A literal '%'</para>
+    <para>     Detection of either the Rivendell Group [%g] or Rivendell Cart [%n]</para>
+    <para>     will cause RDImport to attempt to import the file to the specified Group</para>
+    <para>     and/or Cart, overriding whatever values were specified elsewhere on the</para>
+    <para>     command line.</para>
+    <para>     Boundaries between metadata fields are indicated by placing regular</para>
+    <para>     characters between macros.  For example, the pattern '%t_%a_%g_%n.',</para>
+    <para>     when processing a filename of 'My Song_My Artist_TEMP_123456.mp3',</para>
+    <para>     would extract 'My Song' as the title and 'My Artist' as the artist,</para>
+    <para>     while importing it into cart 123456 in the TEMP group.</para>
+    <para>It may be necessary to enclose individual &lt;filespec&gt; clauses in quotes in order to protect wildcard characters from expansion by the shell.  A typical indicator that this is necessary is the failure of RDImport to process newly added files when running in DropBox mode.</para>
+    <para>The above information can also be displayed on the command line by doing:</para>
+    <para>        rdimport –help</para>
+  </section>
+</chapter>

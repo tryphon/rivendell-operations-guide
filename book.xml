@@ -1,0 +1,25 @@
+<book>
+  <info>
+    <title>Rivendell Operations Guide</title>
+    <author>
+      <personname><firstname>Frederick</firstname><surname>Gleason</surname></personname>
+    </author>
+    <copyright><year>2012</year><holder>Frederick Gleason</holder></copyright>
+
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="revision-history.xml" />
+  </info>
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-1-overview.xml" /> 
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-2-rdlogin.xml" /> 
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-3-rdlibrary.xml" /> 
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-4-rdcatch.xml" /> 
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-5-rdlogedit.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-6-rdairplay.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-7-rdlogmanager.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-8-voicetrack.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-9-rml.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="chapter-10-interfacing.xml" />
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="appendix-a-gpl.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"  href="appendix-b-cc.xml" />
+</book>

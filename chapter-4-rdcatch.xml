@@ -1,0 +1,141 @@
+<chapter>
+  <title>Automating Tasks with RDCatch</title>
+  <section>
+    <title>Choosing the Correct Automation Tool</title>
+    <para>Rivendell includes two modules specially optimized for performing automatic operations:  The RDCatch and RDAirPlay modules.  The two modules take radically different approaches in how they go about organizing and controlling operations, so a few words regarding each may be in order here.</para>
+    <para>RDCatch is aimed at executing actions on the basis of a strict time-based schedule, referred to as an event list.  Each action (which can be a recording, a play out, an up- or download, a macro execution or an operation on an audio switcher device) executes on the basis of its scheduled time in the event list, independently of all other actions.  As such, RDCatch is often best suited for use in settings such as network head end operations or 'auxiliary' roles at broadcast stations, where the transitions between events are generally not an important part of the presentation.</para>
+    <para>RDAirPlay takes a very different approach, in that most events are organized into one or more playlists or logs.  A Rivendell log is a list of one or more carts, organized in chronological order.  As the name implies, RDAirPlay is optimized for use in situations where the transitions between the various program elements are a key part of the delivery and presentation of the content, such as in live air play environments.</para>
+    <para>Of course, it's entirely possible to use both modules, even together on the same machine at the same time – the Linux OS makes for a very robust and capable multitasking system.</para>
+  </section>
+  <section>
+    <title>The RDCatch Main Window</title>
+    <para>After starting up RDCatch, you should see the main RDCatch window, looking something like Illustration 11.  The window consists of four areas:  the record / play out decks at the top, the filter areas just below the decks, the events list and the audition buttons and other buttons at the bottom.  We'll cover each of these in turn.</para>
+    <section>
+      <title>The Record / Play Out Deck Area</title>
+      <para>If the system administrator has configured one or more RDCatch record or play out decks, they will be visible at the top of the RDCatch main window.  A record deck is a virtual 'recorder' that can be used to make automated recordings, while a play out deck can be used to automatically play out audio.   It does not matter on which particular host  a particular deck 'resides' – all Rivendell decks throughout the system are visible in RDCatch, regardless of which host it is run upon.</para>
+      <para>Starting at the left-hand edge of each deck, there is the deck's name, consisting of the name of the deck's host machine followed by a number and a letter, an 'R' to indicate a record deck and a 'P' to indicate a play out deck.  Next, for record decks, there is a MON button, used to monitor the audio present at the deck input, followed by an ABORT button, used to manually stop an event running in the deck.  A description of the currently running event next appears (this area will be blank if no event is currently active), followed by the deck's status, which could be any of the values shown in Table 2.</para>
+      <table frame="all" id="Table3">
+        <title>RDCatch Deck Statuses</title>
+        <tgroup cols="2"><thead><row><entry><para>STATUS</para></entry><entry><para>MEANING</para></entry></row></thead><tbody><row><entry><para>IDLE</para></entry><entry><para>The deck is available for events</para></entry></row><row><entry><para>READY</para></entry><entry><para>The deck has started monitoring audio but the transport is not yet rolling (record decks only).</para></entry></row><row><entry><para>WAITING</para></entry><entry><para>The deck is waiting for a GPI event (record decks only)</para></entry></row><row><entry><para>RECORDING</para></entry><entry><para>The deck is recording (record decks only).</para></entry></row><row><entry><para>PLAYING</para></entry><entry><para>The deck is playing out (play out decks only).</para></entry></row><row><entry><para>OFFLINE</para></entry><entry><para>The deck is configured but not available.</para></entry></row></tbody></tgroup>
+      </table>
+      <para>Finally, each deck has an audio meter on its right-hand end, used to verify audio levels in realtime.</para>
+    </section>
+    <section>
+      <title>The Filter Area</title>
+      <para>Immediately below the decks is the filter area, consisting of the Show Only Active Events, Show Only Today's Events and Show DayOfWeek controls.  These controls are used to select which events will be visible in the events list area immediately below.</para>
+    </section>
+    <section>
+      <title>The Event List</title>
+      <para>The event list is a system wide list of all events to be executed by RDCatch on all of the various hosts on the Rivendell network, with each event occupying a single line.  The status of each event is indicated by its background color, as shown in Table 3.</para>
+      <table frame="all" id="Table4">
+        <title>RDCatch Event List Colors</title>
+        <tgroup cols="2"><thead><row><entry><para>COLOR</para></entry><entry><para>MEANING</para></entry></row></thead><tbody><row><entry><para>YELLOW</para></entry><entry><para>The event is next to be executed.</para></entry></row><row><entry><para>GREEN</para></entry><entry><para>The event is active.</para></entry></row><row><entry><para>CYAN</para></entry><entry><para>The event is in the READY state.</para></entry></row><row><entry><para>VIOLET</para></entry><entry><para>The event is in the WAITING state.</para></entry></row><row><entry><para>RED</para></entry><entry><para>The event is reporting an error.</para></entry></row></tbody></tgroup>
+      </table>
+      <para>Each entry in the event list starts with an icon that indicates the type of the event, as shown in Table 4.</para>
+      <table frame="all" id="Table1">
+        <title>RDCatch Event Icons</title>
+        <tgroup cols="2"><thead><row><entry><para><inlinegraphic fileref="embedded:graphics31" width="0.1665inch" depth="0.1665inch"/></para></entry><entry><para>Record Event</para></entry></row></thead><tbody><row><entry><para><inlinegraphic fileref="embedded:graphics41" width="0.1665inch" depth="0.1665inch"/></para></entry><entry><para>Play Out Event</para></entry></row><row><entry><para><inlinegraphic fileref="embedded:graphics21" width="0.1665inch" depth="0.1665inch"/></para></entry><entry><para>Switch Event</para></entry></row><row><entry><para><inlinegraphic fileref="embedded:graphics51" width="0.1665inch" depth="0.1665inch"/></para></entry><entry><para>Macro Event</para></entry></row><row><entry><para><inlinegraphic fileref="embedded:graphics61" width="0.1665inch" depth="0.1665inch"/></para></entry><entry><para>Upload Event</para></entry></row><row><entry><para><inlinegraphic fileref="embedded:graphics71" width="0.1665inch" depth="0.1665inch"/></para></entry><entry><para>Download Event</para></entry></row></tbody></tgroup>
+      </table>
+      <para>Next on each line comes the description (settable by the user) and location for the event, the location being the name of the host/deck where the event will run.  Then, comes the start and end parameters.  These time-based parameters come in one of three different forms:  a hard time, which is simply an absolute time (in twenty-four hour 'military' format), a length (in HH:MM format, relative to an earlier start time), or a GPI start.  The GPI parameters can be somewhat involved.  They are specified in the following format:</para>
+      <para>        Gpi: &lt;start-time&gt;,&lt;end-time&gt;,&lt;gpi-num&gt;,&lt;wait-time&gt;</para>
+      <para>Where:</para>
+      <para>        &lt;start-time&gt;        The time, in HH:MM:SS format, when RDCatch will start looking for a GPI</para>
+      <para>                         event (also sometimes referred to as the window start time).</para>
+      <para>        &lt;end-time&gt;        The time, in HH:MM:SS format, when RDCatch will stop looking for a GPI</para>
+      <para>                        event (also sometime referred to as the window end time). </para>
+      <para>        &lt;gpi-num&gt;        The number of the GPI event to wait for, in the format MATRIX:LINE.  We will</para>
+      <para>                         deal with GPI matrix and line numbers in detail when we cover RDAdmin.</para>
+      <para>        &lt;wait-time&gt;        The amount of time to wait, in MM:SS format, between the reception of the GPI</para>
+      <para>                        event and the actual start of the event (used only for Start parameters).</para>
+      <para>For example, the start parameter 'Gpi: 14:00:00,14:05:59,0:1,01:00' has a window start time of 14:00:00 [2:00:00 PM], a window end time of 14:05:59, looks for a GPI event on line 0:1 and will wait one minute [01:00] after receiving the GPI before starting the event.</para>
+      <para>Next come the source and destination fields.  The uses of these will vary depending upon what type of event is being listed, but should normally be fairly self-evident.  For example, for a record event, the source field indicates the audio source from which the recording is to be made, while the destination indicates the cat/cut combo to which the recording should be made.  Some events may leave one or the other of these fields blank.</para>
+      <para>Now come the day of the week fields.  These indicate on which days of the week the listed event should be executed, followed by the origin field, which is simply a readout of the Origin data of the events underlying cut.  There are a number of other fields which follow, but these are less important for understanding the operation of RDCatch.</para>
+    </section>
+    <section>
+      <title>The Button Area</title>
+      <para>At the bottom of the main window are various buttons.  On the left-hand side, the Add, Edit and Delete buttons are used to manage events in the event list.  Clicking the Scroll button  toggles RDCatch into and out of 'scroll mode'.  In this mode, the event list display will be advanced automatically so as to keep the first actively running event centered within the event list area.</para>
+      <para>On the right hand side, in addition to Close, are three audition buttons.  These buttons can be used to audition the head and tail of each cut referenced by an event, thus making it possible to quickly verify that a set of automatic recordings were properly executed.</para>
+    </section>
+  </section>
+  <section>
+    <title>Adding New Events</title>
+    <para>A new event can be added to the event list by simply clicking the Add button to bring up the Add Event Dialog (see Illustration 12).  Simply clicking the button that correspond to the desired type of event will create it.</para>
+  </section>
+  <section>
+    <title>Automating Recordings</title>
+    <para>Automated recordings are configured by means of the Edit Recording dialog (see Illustration 13), which can be accessed either by clicking the Recording button in the Add Event dialog to create a new record event or by touching the Edit button to modify an existing event.</para>
+    <section>
+      <title>The 'Start Titlemeters' Section</title>
+      <para>The start parameters of each recording are configured in the 'Start Parameters' section.  A recording can be programmed to start on the basis of the wall clock time, referred to the hard start time, or upon reception of a general-purpose input, or GPI event originated by a satellite receiver, tone decoder or other external device.  Programming a hard start time is merely a matter of entering the desired start time, in 24 hour 'military' format.  Programming a GPI start involves, in addition to entry of the GPI parameters themselves (matrix and GPI line numbers) that Window Start and Windows End times be entered, that define the 'window' during which reception of  the appropriate GPI event will be 'recognized' by RDCatch.  It is also optionally possible to specify a Start Delay between reception of the GPI event and the actual start of the recording.</para>
+    </section>
+    <section>
+      <title>The 'End Titlemeters' Section</title>
+      <para>The end parameters of each recording are configured in the 'End Parameters' section.  A recording can be programmed to end on the basis of a hard time, its absolute length or in response to a GPI event.  Programming of the Hard Time and Length parameters should be fairly self-explanatory, while the parameters needed to program a GPI event are similar to those used for the start parameters, with the exception of the 'Max Record Length' setting, which limits the maximum length of the recording in the event that the expected GPI event is never received.</para>
+    </section>
+    <section>
+      <title>Programming Multiple Recordings in a Single Event</title>
+      <para>If a record event is configured to use GPI for its start and Length or GPI for its end parameter, then it is possible to configure the event to make repeated, multiple recordings within a single event by checking the 'Allow Multiple Recordings Within This Window' box in the 'Start Parameters' section.  This can significantly reduce the amount of required record events when capturing material with high on-air turnover, such as newscasts or traffic reports.</para>
+    </section>
+    <section>
+      <title>Selecting a Record Source</title>
+      <para>If the selected record deck (chosen in the Location drop-down menu at the top of the dialog) as been configured to operate with an audio switcher device, the appropriate audio input can be chosen from the Source drop-down menu.</para>
+    </section>
+    <section>
+      <title>Selecting a Record Destination</title>
+      <para>Each programmed recording must have a 'destination', a designated Cart/Cut which will hold the audio.  The currently programmed destination is shown in the Destination field, and can be changed by clicking the Select button.</para>
+    </section>
+    <section>
+      <title>Setting the Active Days for a Recording</title>
+      <para>A check should be placed next to each day of the week for which a recording should be made in the Active Days box.  If no days are checked, then no recordings at all will be made. </para>
+    </section>
+    <section>
+      <title>Record List Management with Event Active and Make OneShot</title>
+      <para>The record event will be actually executed only if Event Active (in the upper left corner of the dialog box) is checked.  By clearing this box, it's possible to 'bank' a record event without actually having it run, useful for events that are only used sporadically.</para>
+      <para>For events that need to be executed only once, the Make OneShot box can be checked.  Such an event will execute just once, and them automatically delete itself from the event list.</para>
+    </section>
+  </section>
+  <section>
+    <title>Automating Playouts</title>
+    <para>Automated playouts are configured by means of the Edit Playout dialog (see Illustration 14), which can be accessed either by clicking the Playout button in the Add Event dialog to create a new record event or by touching the Edit button to modify an existing event.  The process of configuring a playout is very similar to that for configuring a recording – see the relevant part of Section 3.3, 'Automating Recordings' above for details.</para>
+  </section>
+  <section>
+    <title>Automating Uploads/Downloads</title>
+    <para>It's possible to use RDCatch to automatically upload and download material from both local and Internet-based servers.  Automated downloads are configured by means of the Edit Download dialog, which can be accessed either by clicking the Download button in the Add Event dialog (see Illustration 15) to create a new record event or by touching the Edit button to modify an existing event.</para>
+    <para>With the exception of the Url, Username and Password controls, the process of configuring a download is very similar to that for configuring a recording – see the relevant part of Section 3.3, 'Automating Recordings' above for details.  </para>
+    <para>The Url control is used to specify the Uniform Resource Locater for the material to be downloaded.  The following download types are supported: http, ftp, smb and file.  The URL field can also include wildcard characters that can be used to construct date-based URLs, as shown in Table 5.</para>
+    <para>The Username and Password fields are used to indicate the username and password required for access to the server referenced in the URL.  For public web pages and anonymous FTP servers, these fields can be left blank.</para>
+    <para>Automated uploads are configured by means of the Edit Upload dialog (see Illustration 16), which can be accessed either by clicking the Upload button in the Add Event dialog to create a new record event or by touching the Edit button to modify an existing event.  The following upload types are supported: ftp, smb and file.  As with downloads, the URL field can also include wildcard characters that can be used to construct date-based URLs, as shown in Table 5.</para>
+    <para>Configuration of an upload event is very similar to that of a download, with the addition of the Export Format control.  This is used to set what file format should be used for the upload.  Depending upon what software encoders have been installed by the system administrator, the following export types may be available: </para>
+    <orderedlist>
+      <listitem>
+        <para>PCM16 Linear (*.wav)</para>
+      </listitem>
+      <listitem>
+        <para>Free Lossless Audio Codec [FLAC] (*.flac)</para>
+      </listitem>
+      <listitem>
+        <para>MPEG Layer 2 (*.mp2)</para>
+      </listitem>
+      <listitem>
+        <para>MPEG Layer 3 (*.mp3)</para>
+      </listitem>
+      <listitem>
+        <para>OggVorbis (*.ogg)</para>
+      </listitem>
+    </orderedlist>
+    <para>The desired upload format and parameters are set by clicking the Set button.</para>
+    <table frame="all" id="Table2">
+      <title>RDCatch Date/Time Wildcards</title>
+      <tgroup cols="2"><thead><row><entry><para>WILDCARD</para></entry><entry><para>MEANING</para></entry></row></thead><tbody><row><entry><para>%a</para></entry><entry><para>Abbreviated Weekday Name (e.g. mon, tue)</para></entry></row><row><entry><para>%A</para></entry><entry><para>Full Weekday Name (e.g. monday, tuesday)</para></entry></row><row><entry><para>%b</para></entry><entry><para>Abbreviated Month Name (e.g. jan, feb)</para></entry></row><row><entry><para>%B</para></entry><entry><para>Full Month Name (e.g. January, February)</para></entry></row><row><entry><para>%C</para></entry><entry><para>Century</para></entry></row><row><entry><para>%d</para></entry><entry><para>Day of the Month, range 01 – 31, with leading zero</para></entry></row><row><entry><para>%D</para></entry><entry><para>Numerical Date, in format mm-dd-yy</para></entry></row><row><entry><para>%F</para></entry><entry><para>Numerical Date in ISO 8601 Format (yyyy-mm-dd)</para></entry></row><row><entry><para>%g</para></entry><entry><para>Two Digit Year, as per ISO 8601</para></entry></row><row><entry><para>%G</para></entry><entry><para>Two Digit Year Number, as per ISO 8601</para></entry></row><row><entry><para>%H</para></entry><entry><para>Hour, range 00 – 23, with leading zero</para></entry></row><row><entry><para>%j</para></entry><entry><para>Julian Day, range 000 – 366, with leading zero</para></entry></row><row><entry><para>%m</para></entry><entry><para>Numerical Month, range 01 - 12, with leading zero</para></entry></row><row><entry><para>%M</para></entry><entry><para>Minute, range 00 – 59, with leading zero</para></entry></row><row><entry><para>%S</para></entry><entry><para>Second, range 00 – 60, with leading zero</para></entry></row><row><entry><para>%u</para></entry><entry><para>Numerical Day of the Week, range 1 – 7, 1 = Monday</para></entry></row><row><entry><para>%V</para></entry><entry><para>Week Number, as per ISO 8601</para></entry></row><row><entry><para>%W</para></entry><entry><para>Same as %V</para></entry></row><row><entry><para>%w</para></entry><entry><para>Numerical Day of the Week, range 1 – 7, 1 = Sunday</para></entry></row><row><entry><para>%y</para></entry><entry><para>Two-Digit Year, range 00 – 99</para></entry></row><row><entry><para>%Y</para></entry><entry><para>Four Digit Year, range 0000 – 9999</para></entry></row><row><entry><para>%%</para></entry><entry><para>Literal '%' character</para></entry></row></tbody></tgroup>
+    </table>
+  </section>
+  <section>
+    <title>Automating Macro Execution</title>
+    <para>It's possible to configure the automatic execution of a Macro Cart by means of the Edit Cart Event dialog (see Illustration 17), which can be accessed either by clicking the Macro Cart button in the Add Event dialog to create a new Macro Cart event or by touching the Edit button to modify an existing event.  The process of configuring a macro cart event is very similar to that for configuring a recording – see the relevant part of Section 3.3, 'Automating Recordings' above for details.</para>
+  </section>
+  <section>
+    <title>Automating Switcher Operations</title>
+    <para>It's possible to configure an automatic operation on a switcher device by means of the Edit Switcher Event dialog (see Illustration 18), which can be accessed either by clicking the Switch Event button in the Add Event dialog to create a new switch  event or by touching the Edit button to modify an existing event.</para>
+    <para>In addition to the usual fields, a switch event has Switch Matrix (the name of one of the switch matrices associated with the selected Location), Switch Input and Switch Output controls.  When executed, a switch events causes a take operation to be performed on the specified switcher device between the specified input and output.  It is possible to specify the input and output either by their alphanumeric names (assigned in RDAdmin) or by their absolute numbers.</para>
+  </section>
+</chapter>
