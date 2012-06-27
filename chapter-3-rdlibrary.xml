@@ -28,10 +28,13 @@
       <para># Of Plays – The total number of times the cut has been aired by the RDAirPlay module.</para>
       <para>Origin – The name of the host upon which the audio in the cut was last recorded, along with the date and time.</para>
       <para>Outcue – A user settable field.  This line shows up in the RDAirPlay log when the cut is played.</para>
-      <para>3.0.1.0 Multiple Cuts in a Cart</para>
-      <para>What happens when more than one cut is placed into a cart?  The answer, in a word, is rotation.  Rotation is the ability to schedule a single cart in a log, but to have that cart play out different material at different times.  This capability has a myriad of uses.  One of the simplest, common in commercial radio facilities, is to allow multiple versions of a spot to be placed into the system, while still allowing the traffic department to have to track and schedule only one cart number.  A more sophisticated use involves use of the cut's dayparting settings, forcing different cuts to play based upon certain date/time criteria, such as day of the week or time of day.  Cut dayparting is a very powerful feature in Rivendell, and is something we will discuss shortly.</para>
-      <para>To edit the properties of a cut, either double-click its entry in the cut list, or touch it once to highlight and then touch the Cut Info/Record button.  The Record Dialog (Illustration 4) will now open up.</para>
-      <para>Roughly the upper third of the dialog is for editing the various cut parameters, the middle section is for  configuring the cut's daypart settings, and the bottom third is a record machine that can be used both to record new audio into the system and to audition any recording already made.</para>
+
+      <section>
+        <title>Multiple Cuts in a Cart</title>
+        <para>What happens when more than one cut is placed into a cart?  The answer, in a word, is rotation.  Rotation is the ability to schedule a single cart in a log, but to have that cart play out different material at different times.  This capability has a myriad of uses.  One of the simplest, common in commercial radio facilities, is to allow multiple versions of a spot to be placed into the system, while still allowing the traffic department to have to track and schedule only one cart number.  A more sophisticated use involves use of the cut's dayparting settings, forcing different cuts to play based upon certain date/time criteria, such as day of the week or time of day.  Cut dayparting is a very powerful feature in Rivendell, and is something we will discuss shortly.</para>
+        <para>To edit the properties of a cut, either double-click its entry in the cut list, or touch it once to highlight and then touch the Cut Info/Record button.  The Record Dialog (Illustration 4) will now open up.</para>
+        <para>Roughly the upper third of the dialog is for editing the various cut parameters, the middle section is for  configuring the cut's daypart settings, and the bottom third is a record machine that can be used both to record new audio into the system and to audition any recording already made.</para>
+      </section>
 
       <section>
         <title>Cut Dayparting</title>
