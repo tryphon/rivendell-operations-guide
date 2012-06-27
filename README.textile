@@ -1,0 +1,36 @@
+h1. Rivendell Operations Guide - DocBook version
+
+The document is a DocBook v5 version of "The Rivendell Operations Guide" available on "Rivendell downloads":http://www.rivendellaudio.org/rivendell/download.shtml
+
+"Rivendell":http://www.rivendellaudio.org is a complete radio broadcast automation solution, with facilities for the acquisition, management, scheduling and playout of audio content. 
+
+h2. Outputs
+
+Latest outputs are available in :
+
+* "HTML":http://download.tryphon.eu/rivendell/rog/latest.html 
+* "PDF":http://download.tryphon.eu/rivendell/rog/latest.pdf.
+
+h2. Build html and pdf output
+
+h3. Requirements
+
+You need : @docbook-xsl-ns@, @xsltproc@ and @fop@ (for pdf).
+
+<pre>
+apt-get install docbook-xsl-ns xsltproc fop
+</pre>
+
+h3. HTML
+
+<pre>
+xsltproc --xinclude --output rog.html /usr/share/xml/docbook/stylesheet/docbook-xsl-ns/html/docbook.xsl book.xml
+</pre>
+
+h3. PDF
+
+<pre>
+xsltproc --xinclude --output eog.fo --stringparam paper.type A4 /usr/share/xml/docbook/stylesheet/docbook-xsl-ns/fo/docbook.xsl book.xml
+fop rog.fo rog.pdf
+</pre>
+
